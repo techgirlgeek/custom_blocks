@@ -1,0 +1,4 @@
+name = Custom Site Blocks
+description = Custom blocks for the site
+core = 7.x
+package = OnCampus

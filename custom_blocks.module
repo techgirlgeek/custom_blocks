@@ -1,0 +1,198 @@
+<?php
+
+/**
+ * @file
+ * custom non-dashboard blocks functionality
+ */
+
+/**
+ * Implements hook_block_info().
+ *
+ * This hook declares what blocks are provided by the module.
+ */
+function custom_blocks_block_info() {
+
+  $blocks['social_media_footer_block'] = array(
+    'info' => t('Social media block for the footer'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+
+  $blocks['related_sites_footer_block'] = array(
+    'info' => t('Other housing sites for the footer'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+
+  $blocks['hd_services_footer_block'] = array(
+    'info' => t('HD services block for the footer'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+
+  $blocks['homepage_media_info'] = array(
+    'info' => t('Homepage My Info Block'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+
+  $blocks['homepage_media_housing'] = array(
+    'info' => t('Homepage Housing Block'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+
+  $blocks['homepage_media_dining'] = array(
+    'info' => t('Homepage Dining Block'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+
+  return $blocks;
+
+}
+
+/**
+ * Implements hook_block_view().
+ *
+ * This hook generates the contents of the blocks themselves.
+ */
+function custom_blocks_block_view($delta = '') {
+
+  switch ($delta) {
+    case 'social_media_footer_block':
+      $block['subject'] = t('');
+      $block['content'] = custom_blocks_get_social_media_content();
+    break;
+
+    case 'related_sites_footer_block':
+      $block['subject'] = '<h3>' . t('Related Sites') . '</h3>';
+      $block['content'] = custom_blocks_get_related_site_content();
+    break;
+
+    case 'hd_services_footer_block':
+      $block['subject'] = '<h3>' . t('Housing & Dining Services') . '</h3>';
+      $block['content'] = custom_blocks_get_hd_services_content();
+    break;
+
+    case 'homepage_media_info':
+      $block['subject'] = '';
+      $block['content'] = custom_blocks_media('My Info', 0);
+    break;
+
+    case 'homepage_media_housing':
+      $block['subject'] = '';
+      $block['content'] = custom_blocks_media('My Housing', 1);
+    break;
+
+    case 'homepage_media_dining':
+      $block['subject'] = '';
+      $block['content'] = custom_blocks_media('My Dining', 2);
+    break;
+
+  }
+
+  return $block;
+}
+
+/**
+ * Social Media block content
+ */
+function custom_blocks_get_social_media_content() {
+
+return array('#markup' =>
+  '<p class="social-media-icons">' . 
+    l('', 'https://www.youtube.com/user/univcoloradoboulder', array('attributes' => array('target' => '_blank', 'class' => 'fa fa-youtube fa-2x'))) . 
+    l('', 'https://twitter.com/CUBoulderLiving', array('attributes' => array('target' => '_blank', 'class' => 'fa fa-twitter fa-2x'))) .
+    l('', 'https://instagram.com/CUBoulderLiving', array('attributes' => array('target' => '_blank', 'class' => 'fa fa-instagram fa-2x'))) .
+    l('', 'https://www.facebook.com/CUBoulderHousing', array('attributes' => array('target' => '_blank', 'class' => 'fa fa-facebook fa-2x'))) .
+    l('', 'https://oncampus.colorado.edu/contact', array('attributes' => array('target' => '_blank', 'class' => 'fa fa-envelope fa-2x'))) .
+    '</p><br>
+
+    <h6 class="footer-contact"> <span class="gold-print">' .
+
+    l('Housing & Dining Services', 'http://housing.colorado.edu', array('attributes' => array('class' => 'gold-print', 'target' => '_blank'))) .
+    '</span><br />
+    159 UCB<br />
+    Boulder, CO 80309<br />
+    303-492-6871</h6>
+
+
+    <span class="be-boulder"></span>
+    <br><br>
+    <div><h5 class="footer-copyright">© The Regents of the University of Colorado <br />' .
+    l('Privacy', 'policies') . ' | ' . l('Legal & Trademarks', 'terms') . '</h5></div>'
+  );
+}
+
+/**
+ * Related Sites block content
+ */
+function custom_blocks_get_related_site_content() {
+
+  return array('#markup' => '<p>' . l('Housing and Dining Services', 'http://housing.colorado.edu', array('attributes' => array('target' => '_blank'))) 
+    . '<br />' .
+    l('Bear Creek Apartments', 'http://bearcreek.colorado.edu/', array('attributes' => array('target' => '_blank')))
+    . '<br />' .
+    l('CU Children\'s Center', 'http://childcare.colorado.edu', array('attributes' => array('target' => '_blank')))
+    . '<br />' .
+    l('Residence Hall Association', 'http://rha.colorado.edu', array('attributes' => array('target' => '_blank')))
+    . '<br />' .
+    l('Stampede Leadership Camp', 'http://stampede.colorado.edu/', array('attributes' => array('target' => '_blank')))
+    . '<br />' .
+    l('CU In the Mix', 'http://www.colorado.edu/inthemix/', array('attributes' => array('target' => '_blank')))
+    . '</p>'
+  );
+
+}
+
+/**
+ * Housing and Dining Services block content
+ */
+function custom_blocks_get_hd_services_content() {
+
+  return array('#markup' => '<p><strong>General Information: </strong>' . l( '(303) 492-6871', 'tel:3034926871') . '<br />
+    <strong>Dining Services: </strong>' . l('(303) 492-6325', 'tel:3034926325') . '<br />
+    <strong>Residence Life: </strong> ' . l('(303) 492-7260', 'tel:3034927260') . '<br />
+    <strong>Emergency Maintenance: </strong>' . l('(303) 735-5555', 'tel:3037355555') . '<br />
+    <strong>Occupancy Management: </strong>' . l('(303) 492-6673', 'tel:3034926673') . '<br />
+    <strong>Bear Creek: </strong>' . l('(303) 735-2275', 'tel:3037352275') . '<br />
+    <strong>Graduate &amp; Family Housing: </strong>' . l('(303) 492-6384', 'tel:3034926384') . '<br />
+    <strong>Children&#8217;s Center: </strong>' . l('(303) 492-6185', 'tel:3034926185').  '</p>'
+  );
+
+}
+
+
+/**
+ * Create links for media blocks
+ */
+function custom_blocks_media($type, $query) {
+
+  if (user_is_logged_in()) {
+    return l($type, 'dashboard', array('attributes' => array('class' => 'media-blocks'), 'query' => array('qt-dashboard' => $query)));
+  } else {
+    return l($type, 'user', array('attributes' => array('class' => 'media-blocks')));
+  }
+
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter()
+ * Custom content block on login page
+ */
+function custom_blocks_form_user_login_alter(&$form, &$form_state, $form_id) {
+  $form['introduction'] = array(
+    '#type' => 'item',
+    '#markup' => '<h2>Welcome to your OnCampus Portal</h2> <p><div class="l-content">Login using your CU Login Name/Identikey and associated password.</p> <p>On your dashboard you can complete your roommate agreement, get your staff\'s contact information, see information about your roommate(s), and many other useful information.</div></p>',
+    '#weight' => -50,
+  );
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter()
+ */
+function custom_blocks_form_event_node_form_alter(&$form, &$form_state, $form_id) {
+  $path = drupal_get_path('module', 'custom_blocks');
+
+  $form['field_informational_display_loca'][LANGUAGE_NONE]['#attached'] = array(
+    'js' => array(
+      "$path/custom_blocks.js",
+    ),
+  );
+
+}
